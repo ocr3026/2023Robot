@@ -85,7 +85,6 @@ public class RobotContainer {
 		configureBindings();
 		compressor.enableDigital();
 		//  Configure the default commands
-		fieldTrigger.toggleOnTrue(driveRobotCentric);
 		sendableChooser.addOption(
 			"AutoBalance", autoPlaceAndBalance2.andThen (
 				new FunctionalCommand(
@@ -109,6 +108,8 @@ public class RobotContainer {
 
 	private void configureBindings() {
 		//sendableChooser.addOption("DriveBack", autoBackwards);
+
+		fieldTrigger.toggleOnTrue(driveRobotCentric);
 
 		clawIntakTrigger.whileTrue(intakeSubsystem.ClawIntake());
 		clawOutakeTrigger.whileTrue(intakeSubsystem.ClawOutake());
