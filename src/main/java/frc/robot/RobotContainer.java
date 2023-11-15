@@ -111,6 +111,10 @@ public class RobotContainer {
 
 		ManipulatorDefaultControls.clawIntakTrigger.whileTrue(intakeSubsystem.ClawIntake());
 		ManipulatorDefaultControls.clawOutakeTrigger.whileTrue(intakeSubsystem.ClawOutake());
+		
+		fieldTrigger.toggleOnTrue(driveRobotCentric);
+
+		
 
 		intakeSubsystem.setDefaultCommand(armSubsystem.armCommand(intakeSubsystem));
 
