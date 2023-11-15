@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.OcrMath;
-
+import frc.robot.keybinds.*;
 /**
  * This class is where the bulk of the robot should be declared. Since
  * Command-based is a
@@ -66,8 +66,7 @@ public class RobotContainer {
 
 
 	// Claw Triggers
-	private final Trigger clawIntakTrigger = Constants.xboxController.leftTrigger();
-	private final Trigger clawOutakeTrigger = Constants.xboxController.rightTrigger();
+	
 
 	// private final Trigger autoPlaceTrigger = Constants.xboxController.a();
 	// private final Trigger tuckInTrigger = Constants.xboxController.x();
@@ -85,7 +84,7 @@ public class RobotContainer {
 		configureBindings();
 		compressor.enableDigital();
 		//  Configure the default commands
-		fieldTrigger.toggleOnTrue(driveRobotCentric);
+		DriverDefaultControls.fieldTrigger.toggleOnTrue(driveRobotCentric);
 		sendableChooser.addOption(
 			"AutoBalance", autoPlaceAndBalance2.andThen (
 				new FunctionalCommand(
@@ -110,27 +109,27 @@ public class RobotContainer {
 	private void configureBindings() {
 		//sendableChooser.addOption("DriveBack", autoBackwards);
 
-		clawIntakTrigger.whileTrue(intakeSubsystem.ClawIntake());
-		clawOutakeTrigger.whileTrue(intakeSubsystem.ClawOutake());
+		ManipulatorDefaultControls.clawIntakTrigger.whileTrue(intakeSubsystem.ClawIntake());
+		ManipulatorDefaultControls.clawOutakeTrigger.whileTrue(intakeSubsystem.ClawOutake());
 
 		intakeSubsystem.setDefaultCommand(armSubsystem.armCommand(intakeSubsystem));
 
 		visionSubsystem.setDefaultCommand((armSubsystem.clawCommand(visionSubsystem)));
-		Constants.xboxController.b().whileTrue(armSubsystem.ExtendArm());
-		Constants.xboxController.x().whileTrue(armSubsystem.ReturnArm());
+		ManipulatorDefaultControls.extendArm.whileTrue(armSubsystem.ExtendArm());
+		ManipulatorDefaultControls.retractArm.whileTrue(armSubsystem.ReturnArm());
 
 		// autoPlaceTrigger.whileTrue(autoPlace);
 
-		balanceTrigger.whileTrue(autoBalance);
+		DriverDefaultControls.balanceTrigger.whileTrue(autoBalance);
 		driveSubsystem.setDefaultCommand(driveFieldCentric);
 
-		Constants.xboxController.rightBumper().onTrue(autoPlaceAndBalance);
-		Constants.xboxController.rightBumper().onFalse(new InstantCommand(() ->  CommandScheduler.getInstance().cancel(autoPlaceAndBalance)));
-		Constants.rotationJoystick.button(9).onTrue(
+	//	Constants.xboxController.rightBumper().onTrue(autoPlaceAndBalance);
+	//	Constants.xboxController.rightBumper().onFalse(new InstantCommand(() ->  CommandScheduler.getInstance().cancel(autoPlaceAndBalance)));
+		DriverDefaultControls.resetGyro.onTrue(
 			new InstantCommand(() -> Constants.gyro.reset()));
-		Constants.rotationJoystick.button(8).onTrue(
+		DriverDefaultControls.zeroClaw.onTrue(
 			new InstantCommand(() -> armSubsystem.clawEncoder.setPosition(0)));
-		Constants.rotationJoystick.button(7).onTrue(
+		DriverDefaultControls.zeroArm.onTrue(
 			new InstantCommand(() -> ArmSubsystem.armEncoder.setPosition(0)));
 
 		new Trigger(DriverStation::isDisabled).onTrue(driveSubsystem.OnDisableCommand());
@@ -138,7 +137,7 @@ public class RobotContainer {
 		new Trigger(DriverStation::isEnabled)
 			.onTrue(new InstantCommand(() -> Constants.gyro.setYaw(180)));
 		new Trigger(DriverStation::isEnabled).onTrue(new InstantCommand(() -> driveSubsystem.zeroWheel()));
-		Constants.translationJoystick.button(10).onTrue(driveSubsystem.zeroWheel());
+		DriverDefaultControls.zeroWheel.onTrue(driveSubsystem.zeroWheel());
 
 	//	Constants.translationJoystick.button(1)
 		//	.onTrue(new InstantCommand(() -> driveSubsystem.setCoast()))
@@ -148,7 +147,7 @@ public class RobotContainer {
 
 		Constants.xboxController.button(8).toggleOnTrue(new InstantCommand(() -> driveSubsystem.setBrake()));
 
-		Constants.rotationJoystick.button(1)
+		DriverDefaultControls.slowerDrive
 			.onTrue(new InstantCommand(() -> isShiftedDown = true))
 			.onFalse(new InstantCommand(() -> isShiftedDown = false));
 

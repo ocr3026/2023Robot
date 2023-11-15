@@ -105,7 +105,7 @@ public class ArmSubsystem extends SubsystemBase {
 	}
 	public Command armCommand(Subsystem subsystem) {
 		return new RunCommand(
-			() -> LiftArm(OcrMath.deadband(Constants.xboxController.getLeftY(), .1)), subsystem);
+			() -> LiftArm(OcrMath.deadband(ManipulatorDefaultControls.liftArm, .1)), subsystem);
 	}
 
 	public Command ExtendArm() { return new RunCommand(() -> armSolenoid.set(Value.kReverse)); }
@@ -135,7 +135,7 @@ public class ArmSubsystem extends SubsystemBase {
 	public Command clawCommand(Subsystem subsystem) {
 		return new RunCommand(
 			()
-				-> ClawRotation(OcrMath.deadband(Constants.xboxController.getRightY(), .1) * .25),
+				-> ClawRotation(OcrMath.deadband(ManipulatorDefaultControls.rotateClaw, .1) * .25),
 			subsystem);
 	}
 
