@@ -52,6 +52,7 @@ public class ArmSubsystem extends SubsystemBase {
 	}
 
 	public void LiftArm(double speed) {
+		ManipulatorDefaultControls.updateControllers();
 
 		//slow down Arm whenn it  is  high
 		if (!OcrMath.isWithin(armEncoder.getPosition(), 240)) {

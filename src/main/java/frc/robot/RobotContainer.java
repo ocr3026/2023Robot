@@ -41,6 +41,9 @@ public class RobotContainer {
 	IntakeSubsystem intakeSubsystem = new IntakeSubsystem(armSubsystem);
 	VisionSubsystem visionSubsystem = new VisionSubsystem();
 	Wrist wristSubsystem = new Wrist();
+	DriverDefaultControls driverControls = new DriverDefaultControls();
+	ManipulatorDefaultControls manipulatorControls = new ManipulatorDefaultControls();
+
 
 	// Commands
 	private final Command driveRobotCentric = new DriveRobotCentric(driveSubsystem);
@@ -111,7 +114,7 @@ public class RobotContainer {
 
 		ManipulatorDefaultControls.clawIntakTrigger.whileTrue(intakeSubsystem.ClawIntake());
 		ManipulatorDefaultControls.clawOutakeTrigger.whileTrue(intakeSubsystem.ClawOutake());
-		
+
 		fieldTrigger.toggleOnTrue(driveRobotCentric);
 
 		

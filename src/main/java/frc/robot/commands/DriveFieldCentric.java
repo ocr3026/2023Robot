@@ -21,6 +21,8 @@ public class DriveFieldCentric extends CommandBase {
 
 	@Override
 	public void execute() {
+		DriverDefaultControls.updateDriveValues();
+		
 		if (!RobotContainer.isShiftedDown) {
 			driveSubsystem.driveFieldCentric(
 				OcrMath.deadband(-DriverDefaultControls.driveY, Constants.deadband),

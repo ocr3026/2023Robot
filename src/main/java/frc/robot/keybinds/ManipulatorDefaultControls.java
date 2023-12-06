@@ -12,11 +12,26 @@ public final class ManipulatorDefaultControls {
     public static final Trigger Brake =	Constants.xboxController.button(7);
     public static final Trigger Coast = Constants.xboxController.button(8);
 
-    public static double liftArm = Constants.xboxController.getLeftY();
-    public static double rotateClaw = Constants.xboxController.getRightY();
+
 
     public static boolean invertArm = false;
     public static boolean invertClaw = false;
+
+    public void updateControllers() {
+
+        public static double liftArm = Constants.xboxController.getLeftY();
+        public static double rotateClaw = Constants.xboxController.getRightY();
+        
+        if(invertArm) {
+            liftArm = (Constants.xboxController.getLeftY() * -1) 
+        }
+
+        if(invertClaw) {
+        rotateClaw = (Constants.xboxController.getRightY() * -1)
+        }
+    }
+
+    
 
 
 
